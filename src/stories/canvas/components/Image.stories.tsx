@@ -1,16 +1,12 @@
 import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
 import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
-import Image, { ImageParameters } from '@/components/canvas/Image';
+import Image from '@/components/canvas/Image';
+import { ImageArgTypes } from '@/stories/argTypes';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
 import { ComponentMapping } from '@/utils/createComponentResolver';
-import { ArgTypes, Meta, StoryObj } from '@storybook/react';
-import theme from '../../../../tailwind.config.theme.json';
-import utilities from '../../../../tailwind.utilities.json';
-
-const colorKeys = Object.keys(theme.extend.colors || {});
-const borderKeys = Object.keys(utilities || {}).map(key => key.substring(1));
+import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Image> = {
   title: 'Component Starter Kit/Components/Image',
@@ -19,14 +15,6 @@ const meta: Meta<typeof Image> = {
 
 export default meta;
 type Story = StoryObj<typeof Image>;
-const argTypes: Partial<ArgTypes<ImageParameters>> = {
-  objectFit: { control: 'select', options: ['fill', 'contain', 'cover', 'none', 'scale-down'] },
-  width: { control: { type: 'number', min: 0 } },
-  height: { control: { type: 'number', min: 0 } },
-  overlayColor: { control: 'select', options: colorKeys },
-  overlayOpacity: { control: { type: 'number', min: 0, max: 1, step: 0.1 } },
-  border: { control: 'select', options: borderKeys },
-};
 
 export const Default: Story = {
   args: {
@@ -34,7 +22,7 @@ export const Default: Story = {
     width: 500,
     height: 500,
   },
-  argTypes,
+  argTypes: ImageArgTypes,
   render: args => {
     const route = createFakeCompositionData('image', undefined, {
       ...args,

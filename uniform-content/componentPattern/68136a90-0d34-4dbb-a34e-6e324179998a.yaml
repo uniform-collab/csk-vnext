@@ -1,10 +1,10 @@
 composition:
-  _name: Main Footer
+  _name: Global Footer
   _id: 68136a90-0d34-4dbb-a34e-6e324179998a
   type: footer
   parameters:
     border:
-      type: tp2-border-selector-parameter
+      type: tp2-token-selector-parameter
       value: border-footer
     spacing:
       type: tp2-space-control-parameter
@@ -504,7 +504,7 @@ composition:
                     version: 1
                     children:
                       - mode: normal
-                        text: '2024 Uniform Systems, Inc. All rights reserved. '
+                        text: '2025 Uniform Systems, Inc. All rights reserved. '
                         type: text
                         style: ''
                         detail: 0
@@ -525,13 +525,22 @@ composition:
                         detail: 0
                         format: 0
                         version: 1
-                      - mode: normal
-                        text: Uniform
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
+                      - link:
+                          path: https://www.uniform.dev/
+                          type: url
+                        type: link
+                        format: ''
+                        indent: 0
                         version: 1
+                        children:
+                          - mode: normal
+                            text: Uniform
+                            type: text
+                            style: ''
+                            detail: 0
+                            format: 0
+                            version: 1
+                        direction: ltr
                       - mode: normal
                         text: >-
                           , standing on the shoulders of these awesome open
@@ -541,27 +550,22 @@ composition:
                         detail: 0
                         format: 0
                         version: 1
-                      - mode: normal
-                        text: TailwindCSS
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
+                      - link:
+                          path: https://tailwindcss.com/
+                          type: url
+                        type: link
+                        format: ''
+                        indent: 0
                         version: 1
-                      - mode: normal
-                        text: ",\_"
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 0
-                        version: 1
-                      - mode: normal
-                        text: DaisyUI
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
-                        version: 1
+                        children:
+                          - mode: normal
+                            text: TailwindCSS
+                            type: text
+                            style: ''
+                            detail: 0
+                            format: 0
+                            version: 1
+                        direction: ltr
                       - mode: normal
                         text: ",\_"
                         type: text
@@ -569,13 +573,22 @@ composition:
                         detail: 0
                         format: 0
                         version: 1
-                      - mode: normal
-                        text: React
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
+                      - link:
+                          path: https://react.dev/
+                          type: url
+                        type: link
+                        format: ''
+                        indent: 0
                         version: 1
+                        children:
+                          - mode: normal
+                            text: React
+                            type: text
+                            style: ''
+                            detail: 0
+                            format: 0
+                            version: 1
+                        direction: ltr
                       - mode: normal
                         text: ", and\_"
                         type: text
@@ -583,42 +596,29 @@ composition:
                         detail: 0
                         format: 0
                         version: 1
-                      - mode: normal
-                        text: Next.js
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
+                      - link:
+                          path: https://next.js.org/
+                          type: url
+                        type: link
+                        format: ''
+                        indent: 0
                         version: 1
+                        children:
+                          - mode: normal
+                            text: Next.js
+                            type: text
+                            style: ''
+                            detail: 0
+                            format: 0
+                            version: 1
+                        direction: ltr
                       - mode: normal
-                        text: ". Deployed to\_"
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 0
-                        version: 1
-                      - mode: normal
-                        text: Vercel
-                        type: text
-                        style: ''
-                        detail: 0
-                        format: 8
-                        version: 1
-                      - mode: normal
-                        text: .
+                        text: ' (app router).'
                         type: text
                         style: ''
                         detail: 0
                         format: 0
                         version: 1
-                    direction: ltr
-                    textStyle: ''
-                    textFormat: 0
-                  - type: paragraph
-                    format: ''
-                    indent: 0
-                    version: 1
-                    children: []
                     direction: ltr
                     textStyle: ''
                     textFormat: 0
@@ -626,6 +626,8 @@ composition:
           color:
             type: tp2-color-palette-parameter
             value: text-primary
-created: '2024-10-15T11:53:35.311165+00:00'
-modified: '2024-10-15T12:01:02.151439+00:00'
+  _locales:
+    - en
+created: '2024-11-25T16:05:45.835122+00:00'
+modified: '2024-11-25T16:31:10.010508+00:00'
 pattern: true

@@ -9,6 +9,7 @@ import Card from './Card';
 import Carousel from './Carousel';
 import Container from './Container';
 import Countdown from './Countdown';
+import DemoHero from './DemoHero';
 import Divider from './Divider';
 import Flex from './Flex';
 import FlexItem from './FlexItem';
@@ -83,6 +84,8 @@ export const cskComponentsMapping: ComponentMapping = {
   footer: Footer,
   themeSwitcher: ThemeSwitcher,
   link: Link,
+  fixedHero: DemoHero.FixedHero,
+  flexibleHero: DemoHero.FlexibleHero,
 };
 
 export {
@@ -127,4 +130,5 @@ export {
   Footer,
   ThemeSwitcher,
   Link,
+  DemoHero,
 };
