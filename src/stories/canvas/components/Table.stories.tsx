@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Badge, Button, TableCustomCell, TableDataCell, TableHeaderCell, TableRow, Text } from '@/components/canvas';
 import Table, { TableParameters } from '@/components/canvas/Table';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver, { ComponentMapping } from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { tableDefault, tableWithCustomCells } from '../../canvasMock/components/table';
@@ -13,17 +11,6 @@ import { tableDefault, tableWithCustomCells } from '../../canvasMock/components/
 const meta: Meta<typeof Table> = {
   title: 'Component Starter Kit/Components/Table',
   component: Table,
-};
-
-const mapper: ComponentMapping = {
-  table: Table,
-  tableRow: TableRow,
-  tableHeaderCell: TableHeaderCell,
-  tableDataCell: TableDataCell,
-  tableCustomCell: TableCustomCell,
-  button: Button,
-  text: Text,
-  badge: Badge,
 };
 
 const colorKeys = Object.keys(theme.extend.colors || {});
@@ -40,6 +27,17 @@ const argTypes: Partial<ArgTypes<TableParameters>> = {
 
 export default meta;
 type Story = StoryObj<typeof Table>;
+
+const componentMapper: ComponentMapping = {
+  table: { component: Table },
+  tableRow: { component: TableRow },
+  tableHeaderCell: { component: TableHeaderCell },
+  tableDataCell: { component: TableDataCell },
+  tableCustomCell: { component: TableCustomCell },
+  button: { component: Button },
+  text: { component: Text },
+  badge: { component: Badge },
+};
 
 export const Default: Story = {
   args: {
@@ -66,9 +64,7 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );
@@ -99,9 +95,7 @@ export const WithCustomCells: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );

@@ -1,14 +1,14 @@
 # yaml-language-server: $schema=<https://canary.uniform.app/schemas/json-schema/component-definition/v1.json>
 $schema: https://canary.uniform.app/schemas/json-schema/component-definition/v1.json
-id: card
-name: Card
-icon: card
+id: footer
+name: Footer
+icon: border-bottom
 parameters:
   - id: displayName
     name: Display Name
     type: text
     typeConfig: null
-  - id: d17cf463-2fe4-4d1b-b0c5-c97ed1bf5a43
+  - id: c3eed7c5-3aaf-4857-9934-1eda1d204b7e
     name: Presentation Settings
     type: group
     typeConfig:
@@ -18,7 +18,6 @@ parameters:
         - spacing
         - border
         - fluidContent
-        - fullHeight
   - id: backgroundColor
     name: Background Color
     type: tp2-color-palette-parameter
@@ -37,38 +36,35 @@ parameters:
     name: Fluid Content
     type: checkbox
     typeConfig: null
-  - id: fullHeight
-    name: Full Height
-    type: checkbox
-    typeConfig: null
+categoryId: b1163ce2-5ac7-4347-bc38-a42198180718
 previewImageUrl: >-
-  https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/card-default.jpg
+  https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/footer.jpg
 useTeamPermissions: true
 slots:
-  - id: cardMedia
-    name: Card Media
-    maxComponents: 1
+  - id: footerLogo
+    name: Footer Logo
     allowedComponents:
       - image
-      - video
+      - link
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
-  - id: cardContent
-    name: Card Content
+  - id: footerCopyright
+    name: Footer Copyright
+    maxComponents: 1
     allowedComponents:
-      - badge
-      - button
       - text
       - richText
-      - spacer
     allowAllComponents: false
+    inheritAllowedComponents: false
+    patternsInAllowedComponents: false
+  - id: footerContent
+    name: Footer Content
+    allowedComponents: []
+    allowAllComponents: true
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
 titleParameter: displayName
 canBeComposition: false
-created: '2024-09-25T14:22:04.305348+00:00'
-updated: '2024-11-04T14:35:03.518076+00:00'
-variants:
-  - id: backgroundImage
-    name: Background Image
+created: '2024-12-06T14:01:13.322694+00:00'
+updated: '2024-12-11T21:52:39.159971+00:00'

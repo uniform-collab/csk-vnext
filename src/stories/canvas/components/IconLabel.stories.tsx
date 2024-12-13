@@ -1,10 +1,8 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import IconLabel, { IconLabelParameters } from '@/components/canvas/IconLabel';
 import { TextArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { ICON_ASSET } from '../../assets';
@@ -42,14 +40,9 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            iconLabel: IconLabel,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          iconLabel: { component: IconLabel },
+        })}
         mode="server"
       />
     );

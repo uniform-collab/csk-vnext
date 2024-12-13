@@ -1,17 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { ViewPort } from '@/types';
-
-export type SpaceType = Pick<
-  NonNullable<HTMLAttributes<HTMLDivElement>['style']>,
-  | 'marginTop'
-  | 'marginLeft'
-  | 'paddingTop'
-  | 'marginRight'
-  | 'paddingLeft'
-  | 'marginBottom'
-  | 'paddingRight'
-  | 'paddingBottom'
->;
+import { SpaceType, ViewPort } from '@/types';
 
 export type ContainerProps = HTMLAttributes<HTMLDivElement> & {
   backgroundColor?: string;
@@ -19,6 +7,7 @@ export type ContainerProps = HTMLAttributes<HTMLDivElement> & {
   border?: string | ViewPort<string>;
   fluidContent?: boolean;
   fullHeight?: boolean;
+  wrapperClassName?: string;
 };
 
 export { Container as default } from './Container';

@@ -1,6 +1,4 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import DemoHero, {
   DemoHeroParameters as FixedHeroParameters,
   DemoHeroVariants as FixedHeroVariants,
@@ -8,7 +6,7 @@ import DemoHero, {
 import { ButtonArgTypes, ContainerArgTypes, TextArgTypes } from '@/stories/argTypes';
 import { getFixedHeroContent } from '@/stories/canvasMock/components/fixedHero';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 type AddPrefix<T, Prefix extends string> = {
@@ -62,14 +60,9 @@ const renderStory = (variant?: FixedHeroVariants) => (args: FixedHeroParameters)
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          fixedHero: DemoHero.FixedHero,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        fixedHero: { component: DemoHero.FixedHero },
+      })}
       mode="server"
     />
   );

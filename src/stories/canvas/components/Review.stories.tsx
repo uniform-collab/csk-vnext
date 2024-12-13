@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text, Image } from '@/components/canvas';
 import Review, { ReviewParameters, ReviewVariants } from '@/components/canvas/Review';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { reviewsDefault } from '../../canvasMock/components/reviews';
@@ -46,16 +44,11 @@ const renderStory = (variant?: ReviewVariants) => (args: ReviewParameters) => {
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          review: Review,
-          text: Text,
-          image: Image,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        review: { component: Review },
+        text: { component: Text },
+        image: { component: Image },
+      })}
       mode="server"
     />
   );

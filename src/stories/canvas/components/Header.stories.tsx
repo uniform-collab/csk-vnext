@@ -1,10 +1,9 @@
 import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text, NavigationFlyout, NavigationGroup, NavigationLink, Button, Card, Image } from '@/components/canvas';
 import Header, { HeaderParameters } from '@/components/canvas/Header';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { headerDefault, headerWithFlyout, headerWithGroups, headerWithLinks } from '../../canvasMock/components/header';
@@ -54,21 +53,16 @@ const renderStory = (content: Record<string, ComponentInstance[]>) => (args: Hea
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          header: Header,
-          text: Text,
-          button: Button,
-          navigationFlyout: NavigationFlyout,
-          navigationGroup: NavigationGroup,
-          navigationLink: NavigationLink,
-          card: Card,
-          image: Image,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        header: { component: Header },
+        text: { component: Text },
+        button: { component: Button },
+        navigationFlyout: { component: NavigationFlyout },
+        navigationGroup: { component: NavigationGroup },
+        navigationLink: { component: NavigationLink },
+        card: { component: Card },
+        image: { component: Image },
+      })}
       mode="server"
     />
   );

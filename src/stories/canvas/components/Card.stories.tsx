@@ -1,10 +1,9 @@
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text, Button, Image, RichText } from '@/components/canvas';
 import Card, { CardParameters, CardProps, CardVariant } from '@/components/canvas/Card';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import utilities from '../../../../tailwind.utilities.json';
 import { cardDefault, cardWithBackgroundImage } from '../../canvasMock/components/card';
@@ -22,14 +21,6 @@ const { displayName: _title, ...baseContainerArgTypes } = ContainerArgTypes;
 
 const argTypes: Partial<ArgTypes<CardParameters>> = {
   ...baseContainerArgTypes,
-};
-
-const componentMapper: ComponentMapping = {
-  card: Card,
-  image: Image,
-  text: Text,
-  button: Button,
-  richText: RichText,
 };
 
 type Component = {
@@ -57,8 +48,12 @@ const createStory = ({
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }) => ({
-          component: componentMapper[component?.type] || DefaultNotImplementedComponent,
+        resolveComponent={createComponentResolver({
+          card: { component: Card },
+          image: { component: Image },
+          text: { component: Text },
+          button: { component: Button },
+          richText: { component: RichText },
         })}
         mode="server"
       />

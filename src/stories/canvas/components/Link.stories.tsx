@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import Image from '@/components/canvas/Image';
 import Link, { LinkParameters } from '@/components/canvas/Link';
 import Text from '@/components/canvas/Text';
 import { UNIFORM_LOGO_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver, { ComponentMapping } from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Link> = {
@@ -20,6 +18,13 @@ type Story = StoryObj<typeof Link>;
 const argTypes: Partial<ArgTypes<LinkParameters>> = {
   openInNewTab: { control: 'check' },
 };
+
+const componentMapper: ComponentMapping = {
+  link: { component: Link },
+  text: { component: Text },
+  image: { component: Image },
+};
+
 export const WithImage: Story = {
   args: {
     link: { type: 'url', path: '/' },
@@ -53,15 +58,7 @@ export const WithImage: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            link: Link,
-            image: Image,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );
@@ -101,15 +98,7 @@ export const WithText: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            link: Link,
-            text: Text,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );

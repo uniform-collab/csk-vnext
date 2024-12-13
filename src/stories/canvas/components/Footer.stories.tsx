@@ -1,9 +1,7 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import {
   Flex,
@@ -65,22 +63,17 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            footer: Footer,
-            text: Text,
-            image: Image,
-            richText: RichText,
-            flex: Flex,
-            navigationLink: NavigationLink,
-            grid: Grid,
-            gridItem: GridItem,
-            spacer: Spacer,
-          };
-          return {
-            component: mapper[component?.type] ?? DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          footer: { component: Footer },
+          text: { component: Text },
+          image: { component: Image },
+          richText: { component: RichText },
+          flex: { component: Flex },
+          navigationLink: { component: NavigationLink },
+          grid: { component: Grid },
+          gridItem: { component: GridItem },
+          spacer: { component: Spacer },
+        })}
         mode="server"
       />
     );

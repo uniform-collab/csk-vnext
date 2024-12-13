@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Image } from '@/components/canvas';
 import Flex, { FlexParameters } from '@/components/canvas/Flex';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Flex> = {
@@ -65,15 +63,10 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            image: Image,
-            flex: Flex,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          image: { component: Image },
+          flex: { component: Flex },
+        })}
         mode="server"
       />
     );

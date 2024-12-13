@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Tab, Text } from '@/components/canvas';
 import Tabs, { TabsParameters, TabsVariants } from '@/components/canvas/Tabs';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver, { ComponentMapping } from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { tabsDefault } from '../../canvasMock/components/tabs';
@@ -38,10 +36,10 @@ const getRouteData = (args: TabsParameters, variant = TabsVariants.Default) =>
     tabsDefault
   );
 
-const mapper: ComponentMapping = {
-  tabs: Tabs,
-  tab: Tab,
-  text: Text,
+const componentMapper: ComponentMapping = {
+  tabs: { component: Tabs },
+  tab: { component: Tab },
+  text: { component: Text },
 };
 
 export const Default: Story = {
@@ -61,9 +59,7 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );
@@ -87,9 +83,7 @@ export const Bordered: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );

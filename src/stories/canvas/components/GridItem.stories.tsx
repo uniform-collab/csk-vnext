@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Image } from '@/components/canvas';
 import GridItem, { GridItemParameters } from '@/components/canvas/GridItem';
 import Grid from '@/components/ui/Grid';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof GridItem> = {
@@ -76,15 +74,10 @@ export const Default: Story = {
           params={{}}
           searchParams={{}}
           route={route}
-          resolveComponent={({ component }: { component: ComponentInstance }) => {
-            const mapper: ComponentMapping = {
-              gridItem: GridItem,
-              image: Image,
-            };
-            return {
-              component: mapper[component?.type] || DefaultNotImplementedComponent,
-            };
-          }}
+          resolveComponent={createComponentResolver({
+            gridItem: { component: GridItem },
+            image: { component: Image },
+          })}
           mode="server"
         />
       </Grid>

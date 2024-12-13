@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Flex, Text } from '@/components/canvas';
 import Grid, { GridParameters } from '@/components/canvas/Grid';
 import { simpleStatsContent, gridStatsContent } from '@/stories/canvasMock/patterns/stats';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Grid> = {
@@ -37,16 +35,11 @@ const renderStory = (content: typeof simpleStatsContent) => (args: GridParameter
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          grid: Grid,
-          flex: Flex,
-          text: Text,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        grid: { component: Grid },
+        flex: { component: Flex },
+        text: { component: Text },
+      })}
       mode="server"
     />
   );

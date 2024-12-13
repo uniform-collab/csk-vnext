@@ -1,10 +1,8 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import Countdown, { CountdownParams, CountdownProps, CountdownVariants } from '@/components/canvas/Countdown';
 import { TextParameters } from '@/components/canvas/Text';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { TextArgTypes, ContainerArgTypes } from '../../argTypes';
@@ -74,14 +72,9 @@ const getStory = ({
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            countdown: Countdown,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          countdown: { component: Countdown },
+        })}
         mode="server"
       />
     );

@@ -1,9 +1,7 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import Badge, { BadgeParameters } from '@/components/canvas/Badge';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 
@@ -45,14 +43,9 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            badge: Badge,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          badge: { component: Badge },
+        })}
         mode="server"
       />
     );

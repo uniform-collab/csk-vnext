@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import Container, { ContainerParameters } from '@/components/canvas/Container';
 import Text from '@/components/canvas/Text';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Container> = {
@@ -47,15 +45,10 @@ const renderStory = (label: string) => (args: ContainerParameters) => {
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          container: Container,
-          text: Text,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        container: { component: Container },
+        text: { component: Text },
+      })}
       mode="server"
     />
   );

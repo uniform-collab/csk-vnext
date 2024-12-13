@@ -1,14 +1,14 @@
 # yaml-language-server: $schema=<https://canary.uniform.app/schemas/json-schema/component-definition/v1.json>
 $schema: https://canary.uniform.app/schemas/json-schema/component-definition/v1.json
-id: footer
-name: Footer
-icon: border-bottom
+id: card
+name: Card
+icon: card-hearts
 parameters:
   - id: displayName
     name: Display Name
     type: text
     typeConfig: null
-  - id: c3eed7c5-3aaf-4857-9934-1eda1d204b7e
+  - id: d17cf463-2fe4-4d1b-b0c5-c97ed1bf5a43
     name: Presentation Settings
     type: group
     typeConfig:
@@ -18,6 +18,7 @@ parameters:
         - spacing
         - border
         - fluidContent
+        - fullHeight
   - id: backgroundColor
     name: Background Color
     type: tp2-color-palette-parameter
@@ -36,33 +37,39 @@ parameters:
     name: Fluid Content
     type: checkbox
     typeConfig: null
+  - id: fullHeight
+    name: Full Height
+    type: checkbox
+    typeConfig: null
+categoryId: 096fd5ed-5e2a-4bfa-834b-fb805d1d1ce9
 previewImageUrl: >-
-  https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/footer.jpg
+  https://res.cloudinary.com/uniform-demos/image/upload/csk-v-next/baseline/preview-images/card-default.jpg
 useTeamPermissions: true
 slots:
-  - id: footerLogo
-    name: Footer Logo
-    allowedComponents:
-      - image
-    allowAllComponents: false
-    inheritAllowedComponents: false
-    patternsInAllowedComponents: false
-  - id: footerCopyright
-    name: Footer Copyright
+  - id: cardMedia
+    name: Card Media
     maxComponents: 1
     allowedComponents:
-      - text
-      - richText
+      - image
+      - video
     allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
-  - id: footerContent
-    name: Footer Content
-    allowedComponents: []
-    allowAllComponents: true
+  - id: cardContent
+    name: Card Content
+    allowedComponents:
+      - badge
+      - button
+      - text
+      - richText
+      - spacer
+    allowAllComponents: false
     inheritAllowedComponents: false
     patternsInAllowedComponents: false
 titleParameter: displayName
 canBeComposition: false
-created: '2024-10-07T12:50:04.56003+00:00'
-updated: '2024-10-29T13:19:28.254685+00:00'
+created: '2024-12-06T14:01:14.105927+00:00'
+updated: '2024-12-11T21:50:56.343737+00:00'
+variants:
+  - id: backgroundImage
+    name: Background Image

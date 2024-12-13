@@ -1,10 +1,8 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Button, Flex, Spacer, Text } from '@/components/canvas';
 import Modal, { ModalParameters } from '@/components/canvas/Modal';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver, { ComponentMapping } from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import theme from '../../../../tailwind.config.theme.json';
 import { modalDefault, modalWithActionButtons } from '../../canvasMock/components/modal';
@@ -12,14 +10,6 @@ import { modalDefault, modalWithActionButtons } from '../../canvasMock/component
 const meta: Meta<typeof Modal> = {
   title: 'Component Starter Kit/Components/Modal',
   component: Modal,
-};
-
-const mapper: ComponentMapping = {
-  modal: Modal,
-  button: Button,
-  text: Text,
-  spacer: Spacer,
-  flex: Flex,
 };
 
 const colorKeys = Object.keys(theme.extend.colors || {});
@@ -33,6 +23,14 @@ const argTypes: Partial<ArgTypes<ModalParameters>> = {
 
 export default meta;
 type Story = StoryObj<typeof Modal>;
+
+const componentMapper: ComponentMapping = {
+  modal: { component: Modal },
+  button: { component: Button },
+  text: { component: Text },
+  spacer: { component: Spacer },
+  flex: { component: Flex },
+};
 
 export const Default: Story = {
   args: {
@@ -57,9 +55,7 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );
@@ -89,9 +85,7 @@ export const WithActionButtons: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => ({
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        })}
+        resolveComponent={createComponentResolver(componentMapper)}
         mode="server"
       />
     );

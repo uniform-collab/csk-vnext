@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import Image from '@/components/canvas/Image';
 import ImageGallery, { ImageGalleryParameters } from '@/components/canvas/ImageGallery';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ImageGallery> = {
@@ -50,15 +48,10 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            imageGallery: ImageGallery,
-            image: Image,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          imageGallery: { component: ImageGallery },
+          image: { component: Image },
+        })}
         mode="server"
       />
     );

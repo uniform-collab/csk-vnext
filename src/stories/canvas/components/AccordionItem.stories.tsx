@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text } from '@/components/canvas';
 import AccordionItem, { AccordionItemParameters } from '@/components/canvas/AccordionItem';
 import { TextArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof AccordionItem> = {
@@ -22,6 +20,7 @@ const argTypes: Partial<ArgTypes<AccordionItemParameters>> = {
   text: { control: 'text' },
   ...baseTextArgTypes,
 };
+
 export const Default: Story = {
   args: {
     text: 'How much does the Component Starter Kit cost?',
@@ -65,15 +64,10 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            accordionItem: AccordionItem,
-            text: Text,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          accordionItem: { component: AccordionItem },
+          text: { component: Text },
+        })}
         mode="server"
       />
     );

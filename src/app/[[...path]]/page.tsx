@@ -14,14 +14,12 @@ import retrieveRoute from '@/utils/retrieveRoute';
 
 export default async function Home(props: PageParameters) {
   const route = await retrieveRoute(props, locales.defaultLocale);
+  if (!isRouteWithoutErrors(route)) return notFound();
 
+  const theme = cookies().get('theme')?.value || 'light';
   const serverContext = await createServerUniformContext({
     searchParams: props.searchParams,
   });
-
-  const theme = cookies().get('theme')?.value || 'light';
-
-  if (!isRouteWithoutErrors(route)) return notFound();
 
   return (
     <ThemePackProvider>

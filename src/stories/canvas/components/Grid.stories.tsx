@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Image } from '@/components/canvas';
 import Grid, { GridParameters } from '@/components/canvas/Grid';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Grid> = {
@@ -62,15 +60,10 @@ export const Default: Story = {
         params={{}}
         searchParams={{}}
         route={route}
-        resolveComponent={({ component }: { component: ComponentInstance }) => {
-          const mapper: ComponentMapping = {
-            image: Image,
-            grid: Grid,
-          };
-          return {
-            component: mapper[component?.type] || DefaultNotImplementedComponent,
-          };
-        }}
+        resolveComponent={createComponentResolver({
+          image: { component: Image },
+          grid: { component: Grid },
+        })}
         mode="server"
       />
     );

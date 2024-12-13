@@ -1,11 +1,9 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text, Button, Image } from '@/components/canvas';
 import Section, { ContentAlignment, SectionParameters, SectionVariants } from '@/components/canvas/Section';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 import { getSectionDefaultContent } from '../../canvasMock/components/section';
 
@@ -40,17 +38,12 @@ const renderStory = (variant?: SectionVariants) => (args: SectionParameters) => 
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          section: Section,
-          text: Text,
-          button: Button,
-          image: Image,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        section: { component: Section },
+        text: { component: Text },
+        button: { component: Button },
+        image: { component: Image },
+      })}
       mode="server"
     />
   );

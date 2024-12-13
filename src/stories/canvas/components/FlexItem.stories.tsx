@@ -1,12 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Image } from '@/components/canvas';
 import FlexItem, { FlexItemParameters } from '@/components/canvas/FlexItem';
 import Flex from '@/components/ui/Flex';
 import { IMAGE_ASSET } from '@/stories/assets';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { ArgTypes, Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof FlexItem> = {
@@ -58,15 +56,10 @@ export const Default: Story = {
           params={{}}
           searchParams={{}}
           route={route}
-          resolveComponent={({ component }: { component: ComponentInstance }) => {
-            const mapper: ComponentMapping = {
-              flexItem: FlexItem,
-              image: Image,
-            };
-            return {
-              component: mapper[component?.type] || DefaultNotImplementedComponent,
-            };
-          }}
+          resolveComponent={createComponentResolver({
+            flexItem: { component: FlexItem },
+            image: { component: Image },
+          })}
           mode="server"
         />
         <div className="h-[400px] w-full bg-blue-400" />

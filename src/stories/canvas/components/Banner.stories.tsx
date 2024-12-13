@@ -1,11 +1,10 @@
-import { ComponentInstance } from '@uniformdev/canvas';
 import { UniformComposition } from '@uniformdev/canvas-next-rsc';
-import { DefaultNotImplementedComponent } from '@uniformdev/canvas-next-rsc/component';
 import { Text } from '@/components/canvas';
-import Banner, { BannerParameters, BannerVariants, ContentAlignment } from '@/components/canvas/Banner';
+import Banner, { BannerParameters } from '@/components/canvas/Banner';
+import { BannerVariants, ContentAlignment } from '@/components/canvas/Banner/types';
 import { ContainerArgTypes } from '@/stories/argTypes';
 import { createFakeCompositionData, createUniformParameter, fakeContext } from '@/stories/utils';
-import { ComponentMapping } from '@/utils/createComponentResolver';
+import createComponentResolver from '@/utils/createComponentResolver';
 import { Meta, StoryObj, ArgTypes } from '@storybook/react';
 
 // Define meta for the component
@@ -52,15 +51,10 @@ const renderStory = (variant?: BannerVariants) => (args: BannerParameters) => {
       params={{}}
       searchParams={{}}
       route={route}
-      resolveComponent={({ component }: { component: ComponentInstance }) => {
-        const mapper: ComponentMapping = {
-          banner: Banner,
-          text: Text,
-        };
-        return {
-          component: mapper[component?.type] || DefaultNotImplementedComponent,
-        };
-      }}
+      resolveComponent={createComponentResolver({
+        banner: { component: Banner },
+        text: { component: Text },
+      })}
       mode="server"
     />
   );
